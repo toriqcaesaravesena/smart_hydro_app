@@ -1,0 +1,24 @@
+Alias name: androiddebugkey
+Creation date: Apr 13, 2024
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: C=US, O=Android, CN=Android Debug
+Issuer: C=US, O=Android, CN=Android Debug
+Serial number: 1
+Valid from: Sat Apr 13 12:29:26 WIB 2024 until: Mon Apr 06 12:29:26 WIB 2054
+Certificate fingerprints:
+         SHA1: 01:96:8B:5C:F8:57:28:E2:0E:AB:F9:64:7E:FE:81:1D:A4:00:A0:EE
+         SHA256: 6B:ED:27:28:CF:1D:A6:5C:41:83:CF:15:24:03:66:F4:17:9B:97:90:E3:F0:7E:5B:93:D2:BD:DA:18:B0:30:3F
+Signature algorithm name: SHA1withRSA (weak)
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 1
+
+
+
+Platform  Firebase App Id
+web       1:630420653663:web:550ee1bf8adcfbbea93dea
+android   1:630420653663:android:299bd339f8888511a93dea
+ios       1:630420653663:ios:10eb0ca900b5073fa93dea
+macos     1:630420653663:ios:10eb0ca900b5073fa93dea
+windows   1:630420653663:web:f057b5cb5ede5600a93dea

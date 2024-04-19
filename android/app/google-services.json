@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "630420653663",
+    "project_id": "smart-hydro-app-2f0c8",
+    "storage_bucket": "smart-hydro-app-2f0c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630420653663:android:299bd339f8888511a93dea",
+        "android_client_info": {
+          "package_name": "com.example.smart_hydro_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfKGRZmmC3ecTQ0INMhsTw0Ds_c1e_9UQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
