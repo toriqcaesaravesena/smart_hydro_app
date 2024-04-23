@@ -2,6 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
+import 'package:smart_hydro_application/utils/const.dart';
+// import 'package:smart_hydro_application/services/firebase_api.dart';
 
 class AuthService {
 
@@ -45,16 +47,18 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    String res = "Some error occurred";
-  
+    String res = "";
+
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(email: email, password: password);
 
         res = "success";
-        
-      } else {
-        res = "Please Enter All The Fields";
+      
+      }
+
+      else {
+        showLoginErrorEmpty();
       }
       
     } catch (e) {
@@ -63,6 +67,8 @@ class AuthService {
 
     return res;
   }
+
+
 
   Future<UserModel> getUserDetails() async {
     User currentUser = _auth.currentUser!;

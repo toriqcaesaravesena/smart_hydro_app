@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/views/auth/register/register_screen.dart';
-import 'package:smart_hydro_application/views/shared/input_text_field.dart';
+import 'package:smart_hydro_application/utils/input_text_field.dart';
 import 'package:smart_hydro_application/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (res == "success") {}
   }
+
 
   void goToRegister() {
     Navigator.of(context).push(

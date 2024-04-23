@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/views/shared/input_text_field.dart';
+import 'package:smart_hydro_application/utils/input_text_field.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});

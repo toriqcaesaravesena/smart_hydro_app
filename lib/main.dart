@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:smart_hydro_application/firebase_options.dart';
+// import 'package:smart_hydro_application/services/firebase_api.dart';
 import 'package:smart_hydro_application/wrapper.dart';
 
 void main() async {
@@ -8,6 +10,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // await FirebaseApi().initNotification();
   runApp(const MyApp());
 }
 
@@ -16,9 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SmartHydro(title: 'User State'),
+      home: SmartHydro(title: 'Smart Hydro'),
     );
   }
 }

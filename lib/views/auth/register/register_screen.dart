@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/views/shared/input_text_field.dart';
+import 'package:smart_hydro_application/utils/input_text_field.dart';
 import 'package:smart_hydro_application/services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -32,7 +32,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: _passwordController.text);
 
       if (resp == 'success') {
-        if (!context.mounted) return;
         goToLogin(context);
       }
     }
