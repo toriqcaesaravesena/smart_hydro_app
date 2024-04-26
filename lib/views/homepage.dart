@@ -120,21 +120,22 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: [
-                            Container(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 350,
-                                  height: 120,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                  ),
-                                  child: const Center(child: Text("Article")),
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   child: GestureDetector(
+                            //     onTap: () {},
+                            //     child: Container(
+                            //       width: 350,
+                            //       height: 120,
+                            //       decoration: const BoxDecoration(
+                            //         color: Colors.red,
+                            //       ),
+                            //       child: const Center(child: Text("Article")),
+                            //     ),
+                            //   ),
+                            // ),
+                            Image(image: AssetImage("assets/img/tag_line.png")),
                             const SizedBox(
-                              height: 50,
+                              height: 20,
                             ), // Article
                             Container(
                               child: Column(

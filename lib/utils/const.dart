@@ -9,6 +9,7 @@ import 'package:smart_hydro_application/views/features/monitoring/monitor_kelemb
 import 'package:smart_hydro_application/views/features/monitoring/monitor_nutrisi.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_suhu_air.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_suhu_sekitar.dart';
+import 'package:smart_hydro_application/views/features/profile/edit%20profile/edit_profile.dart';
 import 'package:smart_hydro_application/views/features/profile/profile.dart';
 
 // Colors
@@ -58,6 +59,10 @@ void goToMonitorSuhuSekitar(BuildContext context) {
 void goToMonitorKelembapanSekitar(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const MonitorKelembapanSekitarScreen()));
+}
+void goToEditProfile(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const EditProfileScreen()));
 }
 
 // SnackBar Notification

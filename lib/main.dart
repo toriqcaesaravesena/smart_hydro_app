@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:smart_hydro_application/firebase_options.dart';
-// import 'package:smart_hydro_application/services/firebase_api.dart';
 import 'package:smart_hydro_application/wrapper.dart';
 
 void main() async {
@@ -21,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      // home: LoginScreen()
       home: SmartHydro(title: 'Smart Hydro'),
     );
   }

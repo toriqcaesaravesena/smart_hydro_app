@@ -75,8 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 40, bottom: 5),
+                              padding: EdgeInsets.only(left: 40, bottom: 5),
                               child: Text("Full Name",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -96,20 +95,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 7),
+                                        horizontal: 10, vertical: 10),
                                     child: Text(
                                       userModel!.username,
                                       style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w300,
-                                          fontSize: 24),
+                                          fontSize: 20),
                                     ),
                                   ),
                                 )),
-                            const SizedBox(height: 10,),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 40, bottom: 5),
+                              padding: EdgeInsets.only(left: 40, bottom: 5),
                               child: Text("Email",
                                   style: TextStyle(
                                       fontSize: 16,
@@ -129,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
+                                        horizontal: 10, vertical: 10),
                                     child: Text(
                                       userModel!.email,
                                       style: const TextStyle(
@@ -138,7 +138,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           fontSize: 20),
                                     ),
                                   ),
-                                ))
+                                )),
+                            const SizedBox(height: 20,),
+                            Center(
+                              child: OutlinedButton(
+                                  onPressed: () {
+                                    goToEditProfile(context);
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: primaryColor,
+                                    side: const BorderSide(
+                                      color: darkGreenColor,
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "        Edit        ",
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                  )),
+                            )
                           ]),
                     ),
                   ],
@@ -146,10 +163,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             )),
           ));
-
-      // Center(
-      //   child: Text(userModel!.username),
-      // ),
     } else {
       return const Center(child: CircularProgressIndicator());
     }
