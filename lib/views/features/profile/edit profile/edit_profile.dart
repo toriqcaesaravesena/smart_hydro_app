@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,48 +7,48 @@ import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  const EditProfileScreen(
+      {super.key, required this.username, required this.email});
+
+  final String username;
+  final String email;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  
   @override
   void initState() {
-    updateData();
+    nameController.text = widget.username;
+    emailController.text = widget.email;
     super.initState();
   }
 
-  updateData() async {
-    UserProvider userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
 
   UserModel? userModel;
 
   @override
   Widget build(BuildContext context) {
     userModel = Provider.of<UserProvider>(context).getUser;
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide:
+          Divider.createBorderSide(context, color: Colors.grey, width: 1.0),
+    );
 
     if (userModel != null) {
       return Scaffold(
           appBar: AppBar(
             title: const Center(
-                child: Text("Profile", style: TextStyle(color: Colors.white))),
+                child: Text("Edit Profile",
+                    style: TextStyle(color: Colors.white))),
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                  },
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ))
-            ],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -84,28 +85,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       color: Colors.grey)),
                             ),
                             Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 350,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: primaryColor, width: 1)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: Text(
-                                      userModel!.username,
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 20),
-                                    ),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: TextField(
+                                controller: nameController,
+                                decoration: InputDecoration(
+                                  hintText: userModel?.username ??
+                                      'Masukan nama baru',
+                                  border: inputBorder,
+                                  enabledBorder: inputBorder,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: primaryColor, width: 1.0),
                                   ),
-                                )),
+                                  filled: true,
+                                ),
+                                keyboardType: TextInputType.text,
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
@@ -118,33 +116,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       color: Colors.grey)),
                             ),
                             Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  width: 350,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: primaryColor, width: 1)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: Text(
-                                      userModel!.email,
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 20),
-                                    ),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: TextField(
+                                controller: emailController,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      userModel?.email ?? 'Masukan email baru',
+                                  border: inputBorder,
+                                  enabledBorder: inputBorder,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: primaryColor, width: 1.0),
                                   ),
-                                )),
-                            const SizedBox(height: 20,),
+                                  filled: true,
+                                ),
+                                keyboardType: TextInputType.text,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Center(
                               child: OutlinedButton(
                                   onPressed: () {
-                                    goToEditProfile(context);
+                                    var currentUser = _auth.currentUser;
+                                    if (currentUser != null) {
+                                      var updateDataUser = FirebaseFirestore
+                                          .instance
+                                          .collection('users');
+                                      updateDataUser
+                                          .doc(currentUser.uid)
+                                          .update({
+                                        'username': nameController.text,
+                                        'email': emailController.text
+                                      });
+                                      Navigator.pop(context);
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: const Text('Error'),
+                                            content:
+                                                const Text('User tidak terautentikasi.'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: primaryColor,
@@ -154,7 +182,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                   child: const Text(
                                     "        Save        ",
-                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
                                   )),
                             ),
                             Center(
@@ -170,7 +199,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                   child: const Text(
                                     "      Cancel      ",
-                                    style: TextStyle(color: Colors.grey, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 20),
                                   )),
                             )
                           ]),

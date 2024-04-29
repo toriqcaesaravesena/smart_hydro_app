@@ -32,14 +32,14 @@ class _ControlNutrisiScreenState extends State<ControlNutrisiScreen> {
           children: [
             Container(
               child: Image(
-                image: AssetImage("assets/img/bg.png"),
+                image: const AssetImage("assets/img/bg.png"),
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fitWidth,
               ),
             ),
             Container(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   children: [
                     Row(

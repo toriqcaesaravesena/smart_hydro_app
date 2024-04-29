@@ -1,9 +1,13 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
 import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
+import 'package:smart_hydro_application/views/features/profile/edit%20profile/edit_profile.dart';
+import 'package:smart_hydro_application/views/homepage.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,8 +17,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-
   @override
   void initState() {
     updateData();
@@ -25,8 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     UserProvider userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             actions: [
               IconButton(
                   onPressed: () async {
-                    await Provider.of<UserProvider>(context, listen: false).signOutUser();
+                    await Provider.of<UserProvider>(context, listen: false)
+                        .signOutUser();
                   },
                   icon: const Icon(
                     Icons.logout,
@@ -89,21 +90,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Container(
                                   width: 350,
-                                  height: 50,
+                                  height: 60,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: greyColor,
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                        horizontal: 13, vertical: 19),
                                     child: Text(
-                                      userModel!.username,
+                                      userModel.username,
                                       style: const TextStyle(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 20),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16),
                                     ),
                                   ),
                                 )),
@@ -123,29 +124,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Container(
                                   width: 350,
-                                  height: 50,
+                                  height: 60,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: greyColor,
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                        horizontal: 13, vertical: 19),
                                     child: Text(
-                                      userModel!.email,
+                                      userModel.email,
                                       style: const TextStyle(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 20),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16),
                                     ),
                                   ),
                                 )),
-                            const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Center(
                               child: OutlinedButton(
                                   onPressed: () {
-                                    goToEditProfile(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditProfileScreen(username: userModel.username, email: userModel.email,)));
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: primaryColor,
@@ -155,7 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   child: const Text(
                                     "        Edit        ",
-                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
                                   )),
                             )
                           ]),

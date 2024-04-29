@@ -17,6 +17,7 @@ import 'package:smart_hydro_application/views/features/profile/profile.dart';
 const Color darkGreenColor = Color(0xFF0EB177);
 const Color primaryColor = Color(0xFF40BE73);
 const Color secondaryColor = Color(0xFFDCF2E5);
+const Color greyColor = Color(0xFFE7E0EC);
 
 // Navigator
 
@@ -59,10 +60,6 @@ void goToMonitorSuhuSekitar(BuildContext context) {
 void goToMonitorKelembapanSekitar(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const MonitorKelembapanSekitarScreen()));
-}
-void goToEditProfile(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const EditProfileScreen()));
 }
 
 // SnackBar Notification

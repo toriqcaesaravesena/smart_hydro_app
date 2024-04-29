@@ -6,6 +6,7 @@ import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/input_text_field.dart';
 import 'package:smart_hydro_application/services/auth_service.dart';
+import 'package:smart_hydro_application/views/auth/login/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -78,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   password: _passwordController.text);
 
                               if (resp == 'success') {
-                                goToLogin(context);
+                                const LoginScreen();
                               }
                           },
                           style: ElevatedButton.styleFrom(

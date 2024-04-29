@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: [
-                            Image(image: AssetImage("assets/img/tag_line.png")),
+                            const Image(image: AssetImage("assets/img/tag_line.png")),
                             const SizedBox(
                               height: 20,
                             ), // Article

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +16,7 @@ class AuthService {
       DocumentSnapshot snap = await _fireStore.collection('users').doc(currentUser.uid).get();
       return UserModel.fromSnap(snap);
     } else {
-      print("Tidak ada pengguna yang masuk.");
+      log("Tidak ada pengguna yang masuk.");
       return null;
     }
   }

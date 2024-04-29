@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
           create: (_) => UserProvider(),
         ),
       ],
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Smart Hydro',
-        home: const Wrapper(),
+        home: Wrapper(),
       )
     );
 

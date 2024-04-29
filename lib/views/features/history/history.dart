@@ -16,6 +16,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           child: Column(
             children: [
               Container(
+                // ignore: prefer_const_constructors
                 child: Image(image: AssetImage("assets/img/history.png"),
                 width: MediaQuery.of(context).size.width,
                     fit: BoxFit.fitWidth,),),
