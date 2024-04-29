@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/input_text_field.dart';
 import 'package:smart_hydro_application/services/auth_service.dart';
@@ -25,16 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void registerUser() async {
-      String resp = await AuthService().registerUser(
-          username: _nameController.text,
-          email: _emailController.text,
-          password: _passwordController.text);
-
-      if (resp == 'success') {
-        goToLogin(context);
-      }
-    }
+    final provider = context.read<UserProvider>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -76,7 +71,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: registerUser,
+                          onPressed: () async {
+                              String resp = await provider.registerUser(
+                                  username: _nameController.text,
+                                  email: _emailController.text,
+                                  password: _passwordController.text);
+
+                              if (resp == 'success') {
+                                goToLogin(context);
+                              }
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
@@ -112,62 +116,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   body: SafeArea(
-    //       child: Container(
-    //           padding: const EdgeInsets.symmetric(horizontal: 32),
-    //           width: double.infinity,
-    //           child: Column(
-    //             children: [
-    //               Flexible(flex: 2, child: Container()),
-    //               InputTextField(
-    //                   textEditingController: _nameController,
-    //                   hintText: "Name",
-    //                   textInputType: TextInputType.text),
-    //               const SizedBox(
-    //                 height: 24,
-    //               ),
-    //               InputTextField(
-    //                   textEditingController: _emailController,
-    //                   hintText: "Email",
-    //                   textInputType: TextInputType.emailAddress),
-    //               const SizedBox(
-    //                 height: 24,
-    //               ),
-    //               InputTextField(
-    //                 textEditingController: _passwordController,
-    //                 hintText: "Password",
-    //                 textInputType: TextInputType.text,
-    //                 isPass: true,
-    //               ),
-    //               const SizedBox(
-    //                 height: 24,
-    //               ),
-    //               ElevatedButton(onPressed: registerUser, child: const Text("Register")),
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Container(
-    //                     padding: const EdgeInsets.symmetric(vertical: 8),
-    //                     child: const Text("Already have an Account?"),
-    //                   ),
-    //                   GestureDetector(
-    //                     onTap: () {
-    //                       goToLogin(context);
-    //                     },
-    //                     child: Container(
-    //                       padding: const EdgeInsets.symmetric(vertical: 10),
-    //                       child: const Text(
-    //                         "Log In",
-    //                         style: TextStyle(fontWeight: FontWeight.bold),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ],
-    //               )
-    //             ],
-    //           ))),
-    // );
   }
 }

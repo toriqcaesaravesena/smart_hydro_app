@@ -1,64 +1,17 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
-import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/views/features/history/history.dart';
-import 'package:smart_hydro_application/views/features/profile/profile.dart';
 
-class NavigationPage extends StatefulWidget {
-  const NavigationPage({super.key});
-
-  @override
-  State<NavigationPage> createState() => _NavigationPage();
-}
-
-UserModel? userModel;
-int currentIndex = 1;
-
-class _NavigationPage extends State<NavigationPage> {
-  @override
-  void initState() {
-    updateData();
-    super.initState();
-  }
-
-  updateData() async {
-    UserProvider userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    userModel = Provider.of<UserProvider>(context).getUser;
-
-    return Scaffold(
-        body: const [
-          HistoryScreen(),
-          HomePage(),
-          ProfileScreen(),
-        ][currentIndex],
-        bottomNavigationBar: ConvexAppBar(
-          backgroundColor: primaryColor,
-          items: const [
-            TabItem(icon: Icons.history, title: 'History'),
-            TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.people, title: 'Profile'),
-          ],
-          initialActiveIndex: 1,
-          onTap: (int i) {
-            setState(() {
-              currentIndex = i;
-            });
-          },
-        ));
-  }
-}
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+  UserModel? userModel;
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,19 +73,6 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: [
-                            // Container(
-                            //   child: GestureDetector(
-                            //     onTap: () {},
-                            //     child: Container(
-                            //       width: 350,
-                            //       height: 120,
-                            //       decoration: const BoxDecoration(
-                            //         color: Colors.red,
-                            //       ),
-                            //       child: const Center(child: Text("Article")),
-                            //     ),
-                            //   ),
-                            // ),
                             Image(image: AssetImage("assets/img/tag_line.png")),
                             const SizedBox(
                               height: 20,

@@ -13,6 +13,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+
   @override
   void initState() {
     updateData();
@@ -23,12 +25,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     UserProvider userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
   }
+  
 
-  UserModel? userModel;
 
   @override
   Widget build(BuildContext context) {
-    userModel = Provider.of<UserProvider>(context).getUser;
+    UserModel? userModel = Provider.of<UserProvider>(context).getUser;
 
     if (userModel != null) {
       return Scaffold(
@@ -40,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             actions: [
               IconButton(
                   onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
+                    await Provider.of<UserProvider>(context, listen: false).signOutUser();
                   },
                   icon: const Icon(
                     Icons.logout,

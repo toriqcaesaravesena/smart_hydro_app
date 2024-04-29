@@ -1,7 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/firebase_options.dart';
+import 'package:smart_hydro_application/providers/user_provider.dart';
+import 'package:smart_hydro_application/views/auth/login/login_screen.dart';
 import 'package:smart_hydro_application/wrapper.dart';
 
 void main() async {
@@ -9,7 +14,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await FirebaseApi().initNotification();
   runApp(const MyApp());
 }
 
@@ -18,10 +22,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: LoginScreen()
-      home: SmartHydro(title: 'Smart Hydro'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Smart Hydro',
+        home: const Wrapper(),
+      )
     );
+
   }
 }

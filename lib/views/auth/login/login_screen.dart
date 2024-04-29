@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/views/auth/register/register_screen.dart';
 import 'package:smart_hydro_application/utils/input_text_field.dart';
-import 'package:smart_hydro_application/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,24 +22,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void loginUser() async {
-    String res = await AuthService().loginUser(
-        email: _emailController.text, password: _passwordController.text);
-
-    if (res == "success") {}
-  }
-
-
-  void goToRegister() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const RegisterScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+
+  final provider = context.read<UserProvider>();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -96,7 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: loginUser,
+                            // onPressed: loginUser,
+                            onPressed: () async  {String res = await provider.loginUser(email: _emailController.text, password: _passwordController.text);
+                            if (res == "success") {}
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               shape: RoundedRectangleBorder(
@@ -112,8 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () {
-                            // Corrected: Invoke goToRegister function
-                            goToRegister();
+                            goToRegister(context);
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),

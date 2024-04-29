@@ -153,8 +153,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "        Edit        ",
+                                    "        Save        ",
                                     style: TextStyle(color: Colors.white, fontSize: 20),
+                                  )),
+                            ),
+                            Center(
+                              child: OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    side: const BorderSide(
+                                      color: darkGreenColor,
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "      Cancel      ",
+                                    style: TextStyle(color: Colors.grey, fontSize: 20),
                                   )),
                             )
                           ]),
