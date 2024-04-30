@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
 import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
+import 'package:smart_hydro_application/views/features/profile/profile.dart';
+import 'package:smart_hydro_application/views/navigation_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen(
@@ -152,15 +154,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         'username': nameController.text,
                                         'email': emailController.text
                                       });
-                                      Navigator.pop(context);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute<void>(
+                                            builder: (BuildContext context) =>
+                                                const NavigationPage(),
+                                          ));
                                     } else {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
                                           return AlertDialog(
                                             title: const Text('Error'),
-                                            content:
-                                                const Text('User tidak terautentikasi.'),
+                                            content: const Text(
+                                                'User tidak terautentikasi.'),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {

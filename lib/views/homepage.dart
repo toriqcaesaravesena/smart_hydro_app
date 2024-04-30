@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: SafeArea(
