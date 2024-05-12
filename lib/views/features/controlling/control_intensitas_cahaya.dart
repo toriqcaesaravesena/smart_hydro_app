@@ -1,64 +1,33 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/date.dart';
 import 'package:smart_hydro_application/utils/time.dart';
 
-class MonitorSuhuSekitarScreen extends StatefulWidget {
-  const MonitorSuhuSekitarScreen({super.key});
+class ControlIntensitasCahayaScreen extends StatefulWidget {
+  const ControlIntensitasCahayaScreen({super.key});
 
   @override
-  State<MonitorSuhuSekitarScreen> createState() =>
-      _MonitorSuhuSekitarScreenState();
+  State<ControlIntensitasCahayaScreen> createState() =>
+      _ControlIntensitasCahayaState();
 }
 
-class _MonitorSuhuSekitarScreenState extends State<MonitorSuhuSekitarScreen> {
-  var suhuSekitar;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchSuhuSekitar();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    fetchSuhuSekitar();
-  }
-
-  Future<void> fetchSuhuSekitar() async {
-    final response = await http.get(Uri.parse(
-        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
-    if (response.statusCode == 200) {
-      // If the request is successful, parse the response body
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      // Extract the data you need, you might need to adjust the key according to your Firebase structure
-      setState(() {
-        suhuSekitar = data['DHT']['suhu_ruang'];
-      });
-    } else {
-      // If the request fails, print the error message
-      log('Failed to load data: ${response.statusCode}');
-    }
-  }
-
+class _ControlIntensitasCahayaState
+    extends State<ControlIntensitasCahayaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Suhu Sekitar",
+          "Kontrol Intensitas Cahaya",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: primaryColor,
-        automaticallyImplyLeading: false,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
-      body: suhuSekitar != null ?
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Stack(
           children: [
             Container(
@@ -101,26 +70,21 @@ class _MonitorSuhuSekitarScreenState extends State<MonitorSuhuSekitarScreen> {
                                   offset: const Offset(0, 3),
                                 )
                               ]),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
                             child: Column(
                               children: [
-                                const Image(
+                                Image(
                                     image: AssetImage(
-                                        "assets/icons/hd/suhu_sekitar.png")),
+                                        "assets/icons/hd/kelembapan_sekitar.png")),
+                                const SizedBox(height: 20,),
                                 Text(
-                                  "$suhuSekitar°C",
-                                  style: const TextStyle(
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                const Text(
-                                  "Baik",
+                                  "Gelap",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,
-                                      color: primaryColor),
+                                      color: Colors.grey),
                                 )
                               ],
                             ),
@@ -128,30 +92,13 @@ class _MonitorSuhuSekitarScreenState extends State<MonitorSuhuSekitarScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    OutlinedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          side: const BorderSide(
-                            color: darkGreenColor,
-                          ),
-                        ),
-                        child: const Text(
-                          "          Back to Home          ",
-                          style: TextStyle(color: Colors.white),
-                        ))
                   ],
                 ),
               ),
             ),
           ],
         ),
-      ): const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

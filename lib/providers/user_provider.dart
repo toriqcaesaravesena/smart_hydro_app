@@ -48,7 +48,6 @@ class UserProvider with ChangeNotifier {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-
         res = "success";
       } else {
         showLoginErrorEmpty();
@@ -82,7 +81,8 @@ class UserProvider with ChangeNotifier {
         await _fireStore.collection("users").doc(cred.user!.uid).set(
               userModel.toJson(),
             );
-
+         await _fireStore.collection("users").doc(cred.user!.uid).set(
+              userModel.toJson(),);
         resp = "success";
       }
     } catch (e) {

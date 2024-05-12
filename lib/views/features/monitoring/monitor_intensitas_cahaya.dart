@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/date.dart';
@@ -7,10 +10,39 @@ class MonitorIntensitasCahayaScreen extends StatefulWidget {
   const MonitorIntensitasCahayaScreen({super.key});
 
   @override
-  State<MonitorIntensitasCahayaScreen> createState() => _MonitorIntensitasCahayaScreenState();
+  State<MonitorIntensitasCahayaScreen> createState() =>
+      _MonitorIntensitasCahayaScreenState();
 }
 
-class _MonitorIntensitasCahayaScreenState extends State<MonitorIntensitasCahayaScreen> {
+class _MonitorIntensitasCahayaScreenState
+    extends State<MonitorIntensitasCahayaScreen> {
+  var intensitasCahaya;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchIntensitasCahaya();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fetchIntensitasCahaya();
+  }
+
+  Future<void> fetchIntensitasCahaya() async {
+    final response = await http.get(Uri.parse(
+        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      setState(() {
+        intensitasCahaya = data['Nutrisi']['ppm'];
+      });
+    } else {
+      log('Failed to load data: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +55,8 @@ class _MonitorIntensitasCahayaScreenState extends State<MonitorIntensitasCahayaS
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
+      body: intensitasCahaya != null ?
+      SingleChildScrollView(
         child: Stack(
           children: [
             Container(
@@ -35,7 +68,8 @@ class _MonitorIntensitasCahayaScreenState extends State<MonitorIntensitasCahayaS
             ),
             Container(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Column(
                   children: [
                     Row(
@@ -95,7 +129,6 @@ class _MonitorIntensitasCahayaScreenState extends State<MonitorIntensitasCahayaS
                     const SizedBox(
                       height: 20,
                     ),
-                  
                     OutlinedButton(
                         onPressed: () {
                           Navigator.pop(context);
@@ -116,7 +149,7 @@ class _MonitorIntensitasCahayaScreenState extends State<MonitorIntensitasCahayaS
             ),
           ],
         ),
-      ),
+      ): const CircularProgressIndicator(),
     );
   }
 }

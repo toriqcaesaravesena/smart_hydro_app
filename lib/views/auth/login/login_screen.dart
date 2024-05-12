@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 24),
                         InputTextField(
                           textEditingController: _passwordController,
-                          hintText: "Password",
+                          hintText: "Kata Sandi",
                           textInputType: TextInputType.text,
                           isPass: true,
                         ),
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   goToResetPassword(context);
                                 },
                                 child: const Text(
-                                  "Forgot Password",
+                                  "Lupa Kata Sandi",
                                   style: TextStyle(
                                     color: primaryColor,
                                     fontWeight: FontWeight.w600,
@@ -85,7 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             // onPressed: loginUser,
                             onPressed: () async  {String res = await provider.loginUser(email: _emailController.text, password: _passwordController.text);
-                            if (res == "success") {}
+                            if (res == "success") {
+                            }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             child: const Text(
-                              "Log In",
+                              "Masuk",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -107,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: const Text(
-                              "Don't have an Account? Sign Up",
+                              "Belum memiliki akun? Daftar",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: darkGreenColor,

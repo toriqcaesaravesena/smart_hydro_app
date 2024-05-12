@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/date.dart';
@@ -11,6 +14,37 @@ class MonitorKelembapanSekitarScreen extends StatefulWidget {
 }
 
 class _MonitorKelembapanSekitarScreenState extends State<MonitorKelembapanSekitarScreen> {
+  
+  var kelembabanSekitar;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchKelembabanSekitar();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fetchKelembabanSekitar();
+  }
+
+  Future<void> fetchKelembabanSekitar() async {
+    final response = await http.get(Uri.parse(
+        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
+    if (response.statusCode == 200) {
+      // If the request is successful, parse the response body
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      // Extract the data you need, you might need to adjust the key according to your Firebase structure
+      setState(() {
+        kelembabanSekitar = data['DHT']['kelembaban'];
+      });
+    } else {
+      // If the request fails, print the error message
+      log('Failed to load data: ${response.statusCode}');
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
         return Scaffold(
@@ -23,7 +57,8 @@ class _MonitorKelembapanSekitarScreenState extends State<MonitorKelembapanSekita
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
+      body: kelembabanSekitar != null ?
+      SingleChildScrollView(
         child: Stack(
           children: [
             Container(
@@ -65,21 +100,21 @@ class _MonitorKelembapanSekitarScreenState extends State<MonitorKelembapanSekita
                                   offset: const Offset(0, 3),
                                 )
                               ]),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
                             child: Column(
                               children: [
-                                Image(
+                                const Image(
                                     image: AssetImage(
                                         "assets/icons/hd/kelembapan_sekitar.png")),
                                 Text(
-                                  "22*C",
-                                  style: TextStyle(
+                                  "$kelembabanSekitar%",
+                                  style: const TextStyle(
                                       fontSize: 36,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                Text(
+                                const Text(
                                   "Baik",
                                   style: TextStyle(
                                       fontSize: 20,
@@ -116,7 +151,7 @@ class _MonitorKelembapanSekitarScreenState extends State<MonitorKelembapanSekita
             ),
           ],
         ),
-      ),
+      ) : const Center(child: CircularProgressIndicator()),
     );
   }
 }

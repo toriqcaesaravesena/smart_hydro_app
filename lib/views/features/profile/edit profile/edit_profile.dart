@@ -5,8 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
 import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/views/features/profile/profile.dart';
-import 'package:smart_hydro_application/views/navigation_page.dart';
+import 'package:smart_hydro_application/utils/navigation_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen(
@@ -47,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return Scaffold(
           appBar: AppBar(
             title: const Center(
-                child: Text("Edit Profile",
+                child: Text("Ubah Profil",
                     style: TextStyle(color: Colors.white))),
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
@@ -80,7 +79,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           children: [
                             const Padding(
                               padding: EdgeInsets.only(left: 40, bottom: 5),
-                              child: Text("Full Name",
+                              child: Text("Nama Lengkap",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -188,11 +187,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "        Save        ",
+                                    "    Simpan    ",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   )),
                             ),
+                            const SizedBox(height:15),
                             Center(
                               child: OutlinedButton(
                                   onPressed: () {
@@ -205,7 +205,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "      Cancel      ",
+                                    "      Batal      ",
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 20),
                                   )),

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/date.dart';
@@ -11,6 +14,37 @@ class MonitorNutrisiScreen extends StatefulWidget {
 }
 
 class _MonitorNutrisiScreenState extends State<MonitorNutrisiScreen> {
+
+    var nutrisi;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNutrisi();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fetchNutrisi();
+  }
+
+  Future<void> fetchNutrisi() async {
+    final response = await http.get(Uri.parse(
+        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
+    if (response.statusCode == 200) {
+      // If the request is successful, parse the response body
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      // Extract the data you need, you might need to adjust the key according to your Firebase structure
+      setState(() {
+        nutrisi = data['Nutrisi']['ppm'];
+      });
+    } else {
+      // If the request fails, print the error message
+      log('Failed to load data: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

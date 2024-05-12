@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart'; // tambahkan ini untuk lokalisasi tanggal
 
 class TimeDate extends StatelessWidget {
   TimeDate({super.key});
@@ -8,7 +9,9 @@ class TimeDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(DateFormat('yMMMMEEEEd').format(now),
+    initializeDateFormatting('id', null);
+
+    return Text(DateFormat.yMMMMEEEEd('id').format(now),
         style: const TextStyle(
           fontSize: 16,
           color: Colors.white,

@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:smart_hydro_application/views/auth/login/login_screen.dart';
 import 'package:smart_hydro_application/views/auth/register/register_screen.dart';
 import 'package:smart_hydro_application/views/auth/reset%20password/reset_password_screen.dart';
+import 'package:smart_hydro_application/views/features/controlling/control_intensitas_cahaya.dart';
 import 'package:smart_hydro_application/views/features/controlling/control_nutrisi.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_intensitas_cahaya.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_kelembapan_sekitar.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_nutrisi.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_suhu_air.dart';
 import 'package:smart_hydro_application/views/features/monitoring/monitor_suhu_sekitar.dart';
-import 'package:smart_hydro_application/views/features/profile/edit%20profile/edit_profile.dart';
 import 'package:smart_hydro_application/views/features/profile/profile.dart';
 
 // Colors
@@ -40,6 +40,10 @@ void goToResetPassword(BuildContext context) {
 void goToControlNutrisi(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const ControlNutrisiScreen()));
+}
+void goToControlIntensitasCahaya(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const ControlIntensitasCahayaScreen()));
 }
 void goToMonitorSuhuAir(BuildContext context) {
   Navigator.of(context)

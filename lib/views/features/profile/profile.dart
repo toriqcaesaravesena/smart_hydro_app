@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return Scaffold(
           appBar: AppBar(
             title: const Center(
-                child: Text("Profile", style: TextStyle(color: Colors.white))),
+                child: Text("Profil", style: TextStyle(color: Colors.white))),
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
             actions: [
@@ -79,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             const Padding(
                               padding: EdgeInsets.only(left: 40, bottom: 5),
-                              child: Text("Full Name",
+                              child: Text("Nama Lengkap",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
@@ -161,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "        Edit        ",
+                                    "        Ubah        ",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   )),

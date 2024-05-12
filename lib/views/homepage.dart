@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
+import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,11 +10,27 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-  UserModel? userModel;
+
+UserModel? userModel;
 
 class _HomePageState extends State<HomePage> {
+
+    @override
+  void initState() {
+    updateData();
+    super.initState();
+  }
+
+  updateData() async {
+    UserProvider userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    UserModel? userModel = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -73,42 +90,51 @@ class _HomePageState extends State<HomePage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 50),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Image(image: AssetImage("assets/img/tag_line.png")),
+                            const Image(
+                                image: AssetImage("assets/img/tag_line.png")),
                             const SizedBox(
                               height: 20,
-                            ), // Article
+                            ),
                             Container(
-                              child: Column(
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Pengendalian",
+                                  style: TextStyle(
+                                      fontFamily: "Lato",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "Controlling",
-                                      style: TextStyle(
-                                          fontFamily: "Lato",
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
                                   Container(
                                     child: GestureDetector(
                                         onTap: () =>
                                             goToControlNutrisi(context),
                                         child: Container(
-                                          width: 350,
-                                          height: 110,
+                                          width: 172,
+                                          height: 95,
                                           decoration: BoxDecoration(
                                               color: secondaryColor,
                                               borderRadius:
                                                   BorderRadius.circular(20)),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 20,
+                                                bottom: 20,
+                                                left: 10,
+                                                right: 8),
                                             child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -116,14 +142,80 @@ class _HomePageState extends State<HomePage> {
                                                 children: [
                                                   Image(
                                                     image: AssetImage(
-                                                        "assets/icons/controlling_nutrisi.png"),
+                                                        "assets/icons/control_nutrisi.png"),
                                                   ),
-                                                  Text("Nutrisi Hidroponik",
-                                                      style: TextStyle(
-                                                          fontFamily: "Lato",
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700))
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 10, top: 10),
+                                                    child: Container(
+                                                      width: 85,
+                                                      height: 100,
+                                                      child: Text(
+                                                        "Nutrisi Hidroponik",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 4,
+                                                        style: TextStyle(
+                                                            // height: 1,
+                                                            fontSize: 15,
+                                                            fontFamily: "Lato",
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w900),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ]),
+                                          ),
+                                        )),
+                                  ),
+                                  Container(
+                                    child: GestureDetector(
+                                        onTap: () =>
+                                            goToControlIntensitasCahaya(context),
+                                        child: Container(
+                                          width: 172,
+                                          height: 95,
+                                          decoration: BoxDecoration(
+                                              color: secondaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 20,
+                                                bottom: 20,
+                                                left: 15,
+                                                right: 8),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Image(
+                                                    image: AssetImage(
+                                                        "assets/icons/control_intensitas_cahaya.png"),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 10, top: 10),
+                                                    child: Container(
+                                                      width: 85,
+                                                      height: 100,
+                                                      child: Text(
+                                                        "Intensitas Cahaya",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 4,
+                                                        style: TextStyle(
+                                                            // height: 1,
+                                                            fontSize: 15,
+                                                            fontFamily: "Lato",
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w900),
+                                                      ),
+                                                    ),
+                                                  )
                                                 ]),
                                           ),
                                         )),
@@ -141,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                                     const Padding(
                                       padding: EdgeInsets.only(left: 15),
                                       child: Text(
-                                        "Monitoring",
+                                        "Pemantauan",
                                         style: TextStyle(
                                             fontFamily: "Lato",
                                             fontSize: 18,

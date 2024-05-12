@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/firebase_options.dart';
 import 'package:smart_hydro_application/providers/user_provider.dart';
 import 'package:smart_hydro_application/views/auth/login/login_screen.dart';
-import 'package:smart_hydro_application/wrapper.dart';
+import 'package:smart_hydro_application/services/user_wrapper_service.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -51,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       InputTextField(
                         textEditingController: _nameController,
-                        hintText: "Name",
+                        hintText: "Nama Lengkap",
                         textInputType: TextInputType.text,
                       ),
                       const SizedBox(height: 24),
@@ -63,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 24),
                       InputTextField(
                         textEditingController: _passwordController,
-                        hintText: "Password",
+                        hintText: "Kata Sandi",
                         textInputType: TextInputType.text,
                         isPass: true,
                       ),
@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           child: const Text(
-                            "Register",
+                            "Daftar",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -102,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: const Text(
-                            "Already have an Account? Log In",
+                            "Sudah memiliki akun? Masuk",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: darkGreenColor,
