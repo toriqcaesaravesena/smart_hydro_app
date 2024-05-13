@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_hydro_application/providers/monitoring_provider.dart';
 import 'package:smart_hydro_application/utils/const.dart';
 import 'package:smart_hydro_application/utils/date.dart';
 import 'package:smart_hydro_application/utils/time.dart';
@@ -14,38 +16,37 @@ class MonitorSuhuAirScreen extends StatefulWidget {
 }
 
 class _MonitorSuhuAirScreenState extends State<MonitorSuhuAirScreen> {
-  var suhuAir;
+
 
   @override
   void initState() {
-    super.initState();
     fetchSuhuAir();
+    super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
     fetchSuhuAir();
+    super.didChangeDependencies();
   }
+
 
   Future<void> fetchSuhuAir() async {
     final response = await http.get(Uri.parse(
         'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
     if (response.statusCode == 200) {
-      // If the request is successful, parse the response body
       final Map<String, dynamic> data = jsonDecode(response.body);
-      // Extract the data you need, you might need to adjust the key according to your Firebase structure
       setState(() {
         suhuAir = data['suhu_air']['Celcius'];
       });
     } else {
-      // If the request fails, print the error message
       log('Failed to load data: ${response.statusCode}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         appBar: AppBar(
           title: const Text(

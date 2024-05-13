@@ -20,12 +20,6 @@ class UserProvider with ChangeNotifier {
 
   UserModel? get getUser => _user;
 
-  // Future<void> refreshUser() async {
-  //   UserModel user = await _authService.getUserDetails();
-  //   _user = user;
-  //   notifyListeners();
-  // }
-
   Future<void> refreshUser() async {
   UserModel? user = await _authService.getUserDetails();
   if (user != null) {
