@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_hydro_application/providers/user_provider.dart';
-import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/utils/input_text_field.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/utils/routes.dart';
+import 'package:smart_hydro_application/viewmodels/user_provider.dart';
+import 'package:smart_hydro_application/views/shared/input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

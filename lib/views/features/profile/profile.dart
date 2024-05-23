@@ -1,11 +1,11 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, avoid_unnecessary_containers
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
-import 'package:smart_hydro_application/providers/user_provider.dart';
-import 'package:smart_hydro_application/utils/const.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/viewmodels/user_provider.dart';
 import 'package:smart_hydro_application/views/features/profile/edit%20profile/edit_profile.dart';
 import 'package:smart_hydro_application/views/homepage.dart';
 
@@ -92,13 +92,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 350,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                      color: greyColor,
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 13, vertical: 19),
+                                        horizontal: 13, vertical: 15),
                                     child: Text(
                                       userModel.username,
                                       style: const TextStyle(
@@ -126,13 +126,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 350,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                      color: greyColor,
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: primaryColor, width: 1)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 13, vertical: 19),
+                                        horizontal: 13, vertical: 15),
                                     child: Text(
                                       userModel.email,
                                       style: const TextStyle(

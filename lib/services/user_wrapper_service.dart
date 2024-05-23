@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/utils/navigation_page.dart';
-import 'package:smart_hydro_application/providers/user_provider.dart';
+import 'package:smart_hydro_application/viewmodels/user_provider.dart';
 import 'package:smart_hydro_application/views/auth/login/login_screen.dart';
 
 class Wrapper extends StatefulWidget {

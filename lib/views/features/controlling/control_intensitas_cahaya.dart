@@ -1,7 +1,9 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
-import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/utils/date.dart';
-import 'package:smart_hydro_application/utils/time.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/views/shared/date.dart';
+import 'package:smart_hydro_application/views/shared/time.dart';
 
 class ControlIntensitasCahayaScreen extends StatefulWidget {
   const ControlIntensitasCahayaScreen({super.key});
@@ -78,7 +80,7 @@ class _ControlIntensitasCahayaState
                                 Image(
                                     image: AssetImage(
                                         "assets/icons/hd/kelembapan_sekitar.png")),
-                                const SizedBox(height: 20,),
+                                SizedBox(height: 20,),
                                 Text(
                                   "Gelap",
                                   style: TextStyle(

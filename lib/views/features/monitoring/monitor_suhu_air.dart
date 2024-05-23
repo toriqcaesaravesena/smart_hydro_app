@@ -1,12 +1,12 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:smart_hydro_application/providers/monitoring_provider.dart';
-import 'package:smart_hydro_application/utils/const.dart';
-import 'package:smart_hydro_application/utils/date.dart';
-import 'package:smart_hydro_application/utils/time.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/views/shared/date.dart';
+import 'package:smart_hydro_application/views/shared/time.dart';
 
 class MonitorSuhuAirScreen extends StatefulWidget {
   const MonitorSuhuAirScreen({super.key});
@@ -17,36 +17,23 @@ class MonitorSuhuAirScreen extends StatefulWidget {
 
 class _MonitorSuhuAirScreenState extends State<MonitorSuhuAirScreen> {
 
-
-  @override
-  void initState() {
-    fetchSuhuAir();
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    fetchSuhuAir();
-    super.didChangeDependencies();
-  }
-
-
-  Future<void> fetchSuhuAir() async {
-    final response = await http.get(Uri.parse(
-        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      setState(() {
-        suhuAir = data['suhu_air']['Celcius'];
-      });
-    } else {
-      log('Failed to load data: ${response.statusCode}');
+  Stream<Map<String, dynamic>> fetchSuhuAirStream() async* {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 10));
+      final response = await http.get(Uri.parse(
+          'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        yield data['suhu_air'];
+      } else {
+        log('Failed to load data: ${response.statusCode}');
+        yield {};
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -57,8 +44,18 @@ class _MonitorSuhuAirScreenState extends State<MonitorSuhuAirScreen> {
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
         ),
-        body: suhuAir != null
-            ? SingleChildScrollView(
+        body: StreamBuilder<Map<String, dynamic>>(
+          stream: fetchSuhuAirStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No data available'));
+            } else {
+              final suhuAir = snapshot.data!['Celcius'];
+              return SingleChildScrollView(
                 child: Stack(
                   children: [
                     Container(
@@ -112,7 +109,7 @@ class _MonitorSuhuAirScreenState extends State<MonitorSuhuAirScreen> {
                                         Text(
                                           "$suhuAir°C",
                                           style: const TextStyle(
-                                              fontSize: 36,
+                                              fontSize: 30,
                                               fontWeight: FontWeight.w700),
                                         ),
                                         Text(
@@ -154,7 +151,9 @@ class _MonitorSuhuAirScreenState extends State<MonitorSuhuAirScreen> {
                     ),
                   ],
                 ),
-              )
-            : const Center(child: CircularProgressIndicator()));
+              );
+            }
+          },
+        ));
   }
 }

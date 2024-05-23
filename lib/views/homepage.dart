@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
-import 'package:smart_hydro_application/providers/user_provider.dart';
-import 'package:smart_hydro_application/utils/const.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/utils/routes.dart';
+import 'package:smart_hydro_application/viewmodels/user_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +17,7 @@ class HomePage extends StatefulWidget {
 UserModel? userModel;
 
 class _HomePageState extends State<HomePage> {
-
-    @override
+  @override
   void initState() {
     updateData();
     super.initState();
@@ -26,10 +28,8 @@ class _HomePageState extends State<HomePage> {
     await userProvider.refreshUser();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     UserModel? userModel = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                           child: Padding(
-                                            padding: EdgeInsets.only(
+                                            padding: const EdgeInsets.only(
                                                 top: 20,
                                                 bottom: 20,
                                                 left: 10,
@@ -140,17 +140,18 @@ class _HomePageState extends State<HomePage> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Image(
+                                                  const Image(
                                                     image: AssetImage(
                                                         "assets/icons/control_nutrisi.png"),
                                                   ),
                                                   Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: 10, top: 10),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10, top: 10),
                                                     child: Container(
                                                       width: 85,
                                                       height: 100,
-                                                      child: Text(
+                                                      child: const Text(
                                                         "Nutrisi Hidroponik",
                                                         textAlign:
                                                             TextAlign.center,
@@ -172,7 +173,8 @@ class _HomePageState extends State<HomePage> {
                                   Container(
                                     child: GestureDetector(
                                         onTap: () =>
-                                            goToControlIntensitasCahaya(context),
+                                            goToControlIntensitasCahaya(
+                                                context),
                                         child: Container(
                                           width: 172,
                                           height: 95,
@@ -181,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                           child: Padding(
-                                            padding: EdgeInsets.only(
+                                            padding: const EdgeInsets.only(
                                                 top: 20,
                                                 bottom: 20,
                                                 left: 15,
@@ -191,17 +193,18 @@ class _HomePageState extends State<HomePage> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Image(
+                                                  const Image(
                                                     image: AssetImage(
                                                         "assets/icons/control_intensitas_cahaya.png"),
                                                   ),
                                                   Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: 10, top: 10),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10, top: 10),
                                                     child: Container(
                                                       width: 85,
                                                       height: 100,
-                                                      child: Text(
+                                                      child: const Text(
                                                         "Intensitas Cahaya",
                                                         textAlign:
                                                             TextAlign.center,
@@ -368,109 +371,41 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 10,
+                                      height: 30,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 45),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () =>
-                                                  goToMonitorSuhuSekitar(
-                                                      context),
-                                              child: Container(
-                                                width: 110,
-                                                height: 110,
-                                                decoration: BoxDecoration(
-                                                    color: secondaryColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                child: const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      top: 15,
-                                                      bottom: 10),
-                                                  child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Image(
-                                                          image: AssetImage(
-                                                              "assets/icons/suhu_sekitar.png"),
-                                                        ),
-                                                        Text("Suhu Sekitar",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                height: 1,
-                                                                fontSize: 13.5,
-                                                                fontFamily:
-                                                                    "Lato",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w900))
-                                                      ]),
-                                                ),
-                                              )),
-                                          GestureDetector(
-                                            onTap: () =>
-                                                goToMonitorKelembapanSekitar(
-                                                    context),
-                                            child: Container(
-                                              width: 110,
-                                              height: 110,
-                                              decoration: BoxDecoration(
-                                                  color: secondaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 10,
-                                                    right: 10,
-                                                    top: 15,
-                                                    bottom: 5),
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Image(
-                                                        image: AssetImage(
-                                                            "assets/icons/kelembapan_sekitar.png"),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 4),
-                                                        child: Text(
-                                                            "Kelembapan Sekitar",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                height: 1,
-                                                                fontSize: 13.5,
-                                                                fontFamily:
-                                                                    "Lato",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w900)),
-                                                      )
-                                                    ]),
+                                    GestureDetector(
+                                      onTap: () {
+                                        goToHistoryDataPage(context);
+                                      },
+                                      child: SizedBox(
+                                          width: double.infinity,
+                                          height: 10 * 5,
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: const Center(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(Icons.history, color: Colors.white,),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(left:5),
+                                                    child: Text("History Data",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    )
+                                          )),
+                                    ),
                                   ]),
-                            ), // Monitoring
+                            ),
                           ],
                         ),
                       ),
@@ -485,3 +420,105 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
+                                    //   Padding(
+                                    //     padding: const EdgeInsets.symmetric(
+                                    //         horizontal: 45),
+                                    //     child: Row(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.spaceEvenly,
+                                    //       children: [
+                                    //         GestureDetector(
+                                    //             onTap: () =>
+                                    //                 goToMonitorSuhuSekitar(
+                                    //                     context),
+                                    //             child: Container(
+                                    //               width: 110,
+                                    //               height: 110,
+                                    //               decoration: BoxDecoration(
+                                    //                   color: secondaryColor,
+                                    //                   borderRadius:
+                                    //                       BorderRadius.circular(
+                                    //                           20)),
+                                    //               child: const Padding(
+                                    //                 padding: EdgeInsets.only(
+                                    //                     left: 10,
+                                    //                     right: 10,
+                                    //                     top: 15,
+                                    //                     bottom: 10),
+                                    //                 child: Column(
+                                    //                     mainAxisAlignment:
+                                    //                         MainAxisAlignment
+                                    //                             .spaceBetween,
+                                    //                     children: [
+                                    //                       Image(
+                                    //                         image: AssetImage(
+                                    //                             "assets/icons/suhu_sekitar.png"),
+                                    //                       ),
+                                    //                       Text("Suhu Sekitar",
+                                    //                           textAlign: TextAlign
+                                    //                               .center,
+                                    //                           style: TextStyle(
+                                    //                               height: 1,
+                                    //                               fontSize: 13.5,
+                                    //                               fontFamily:
+                                    //                                   "Lato",
+                                    //                               fontWeight:
+                                    //                                   FontWeight
+                                    //                                       .w900))
+                                    //                     ]),
+                                    //               ),
+                                    //             )),
+                                    //         GestureDetector(
+                                    //           onTap: () =>
+                                    //               goToMonitorKelembapanSekitar(
+                                    //                   context),
+                                    //           child: Container(
+                                    //             width: 110,
+                                    //             height: 110,
+                                    //             decoration: BoxDecoration(
+                                    //                 color: secondaryColor,
+                                    //                 borderRadius:
+                                    //                     BorderRadius.circular(
+                                    //                         20)),
+                                    //             child: const Padding(
+                                    //               padding: EdgeInsets.only(
+                                    //                   left: 10,
+                                    //                   right: 10,
+                                    //                   top: 15,
+                                    //                   bottom: 5),
+                                    //               child: Column(
+                                    //                   mainAxisAlignment:
+                                    //                       MainAxisAlignment
+                                    //                           .spaceBetween,
+                                    //                   children: [
+                                    //                     Image(
+                                    //                       image: AssetImage(
+                                    //                           "assets/icons/kelembapan_sekitar.png"),
+                                    //                     ),
+                                    //                     Padding(
+                                    //                       padding:
+                                    //                           EdgeInsets.only(
+                                    //                               top: 4),
+                                    //                       child: Text(
+                                    //                           "Kelembapan Sekitar",
+                                    //                           textAlign: TextAlign
+                                    //                               .center,
+                                    //                           style: TextStyle(
+                                    //                               height: 1,
+                                    //                               fontSize: 13.5,
+                                    //                               fontFamily:
+                                    //                                   "Lato",
+                                    //                               fontWeight:
+                                    //                                   FontWeight
+                                    //                                       .w900)),
+                                    //                     )
+                                    //                   ]),
+                                    //             ),
+                                    //           ),
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //   )
