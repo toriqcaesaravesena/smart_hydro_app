@@ -13,14 +13,19 @@ class UserModel {
   });
 
   Map<String, dynamic> toJson() => {
-    "username" : username,
-    "uid" : uid,
-    "email" : email,
+    "username": username,
+    "uid": uid,
+    "email": email,
   };
 
   static UserModel fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-    return UserModel (
+    var snapshot = snap.data() as Map<String, dynamic>?;
+
+    if (snapshot == null) {
+      throw StateError("DocumentSnapshot returned null data.");
+    }
+
+    return UserModel(
       uid: snapshot['uid'],
       username: snapshot['username'],
       email: snapshot['email'],

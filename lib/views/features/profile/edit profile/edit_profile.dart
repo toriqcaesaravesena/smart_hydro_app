@@ -48,7 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return Scaffold(
           appBar: AppBar(
             title: const Center(
-                child: Text("Ubah Profil",
+                child: Text("Ubah Akun",
                     style: TextStyle(color: Colors.white))),
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
@@ -72,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundImage:
-                            AssetImage("assets/img/profile_pictures/pp.jpg"),
+                            AssetImage("assets/img/profile_pictures/pp.png"),
                       ),
                     ),
                     Container(

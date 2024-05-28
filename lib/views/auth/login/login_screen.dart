@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:smart_hydro_application/services/notification.dart';
 import 'package:smart_hydro_application/utils/colors.dart';
 import 'package:smart_hydro_application/utils/routes.dart';
 import 'package:smart_hydro_application/viewmodels/user_provider.dart';
@@ -23,10 +26,54 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future<void> _signInWithEmailAndPassword() async {
+  if (_emailController.text.trim().isEmpty && _passwordController.text.trim().isEmpty) {
+    CustomSnackbarLogin.showSnackBarError(context, "Email dan Kata Sandi tidak boleh kosong!");
+  } else if (_emailController.text.trim().isEmpty) {
+    CustomSnackbarLogin.showSnackBarError(context, "Email tidak boleh kosong!");
+  } else if (_passwordController.text.trim().isEmpty) {
+    CustomSnackbarLogin.showSnackBarError(context, "Kata Sandi tidak boleh kosong!");
+  } else if (_isValidEmail(_emailController.text.trim())) {
+    try {
+      await UserProvider().signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-disabled':
+          CustomSnackbarLogin.showSnackBarError(context, "Akun anda dinonaktifkan oleh administrator");
+          break;
+        case 'channel-error':
+          CustomSnackbarLogin.showSnackBarError(context, "Data tidak boleh kosong!");
+          break;
+        case 'user-not-found':
+          CustomSnackbarLogin.showSnackBarError(context, "Email yang anda masukkan tidak terdaftar sebagai pengguna");
+          break;
+        case 'too-many-requests':
+          CustomSnackbarLogin.showSnackBarError(context, "Terlalu banyak permintaan, coba lagi nanti");
+          break;
+        case 'network-request-failed':
+          CustomSnackbarLogin.showSnackBarError(context, "Terdapat kesalahan dalam jaringan, coba lagi nanti");
+          break;
+        case 'invalid-credential':
+          CustomSnackbarLogin.showSnackBarError(context, "Alamat email dan kata sandi yang anda masukan salah");
+          break;
+        default:
+          CustomSnackbarLogin.showSnackBarError(context, '${e.code}: ${e.message}');
+      }
+    }
+  } else {
+    CustomSnackbarLogin.showSnackBarError(context, "Email Tidak Terdaftar");
+  }
+}
+
+bool _isValidEmail(String email) {
+  return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+}
+
+
   @override
   Widget build(BuildContext context) {
-
-  final provider = context.read<UserProvider>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -65,7 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  // Handle forgot password logic here
                                   goToResetPassword(context);
                                 },
                                 child: const Text(
@@ -85,10 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 50,
                           child: ElevatedButton(
                             // onPressed: loginUser,
-                            onPressed: () async  {String res = await provider.loginUser(email: _emailController.text, password: _passwordController.text);
-                            if (res == "success") {
-                            }
-                            },
+                            onPressed: _signInWithEmailAndPassword,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               shape: RoundedRectangleBorder(

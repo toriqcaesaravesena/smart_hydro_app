@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart'; 
+import 'package:intl/date_symbol_data_local.dart';
 
 class TimeNow extends StatelessWidget {
   TimeNow({super.key});
@@ -13,7 +12,7 @@ class TimeNow extends StatelessWidget {
 
     final wib = now.toUtc().add(const Duration(hours: 7));
 
-    return Text(DateFormat('jm', 'id').format(wib),
+    return Text('${wib.hour.toString().padLeft(2, '0')}:${wib.minute.toString().padLeft(2, '0')}:${wib.second.toString().padLeft(2, '0')}',
         style: const TextStyle(
           fontSize: 16,
           color: Colors.white,

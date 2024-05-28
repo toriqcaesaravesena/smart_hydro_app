@@ -1,25 +1,40 @@
-// lib/viewmodels/monitoring_provider.dart
 // ignore_for_file: prefer_typing_uninitialized_variables
-import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class MonitorProvider with ChangeNotifier {
-  var suhuAirMonitor;
-  var nutrisiMonitor;
-  var intensitasCahayaMonitor;
+class ControlProvider with ChangeNotifier {
+  var nutrisiSensor;
+  var intensitasCahaya;
 
-  Future<void> fetchSuhuAir() async {
+  Future<void> fetchNutrisiSensor() async {
     final response = await http.get(Uri.parse(
         'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
-      suhuAirMonitor = data['suhu_air']['Celcius'];
+      nutrisiSensor = data['Nutrisi']['kontrol'];
       notifyListeners();
     } else {
       log('Failed to load data: ${response.statusCode}');
+    }
+  }
+
+  Future<void> storeNutrisiValue(int value) async {
+    try {
+      final response = await http.patch(
+        Uri.parse(
+            'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/Nutrisi.json'),
+        body: jsonEncode({"kontrol": value}),
+      );
+      if (response.statusCode == 200) {
+        log('Nutrisi value stored successfully: $value');
+      } else {
+        log('Failed to store nutrisi value: ${response.statusCode}');
+      }
+    } catch (error) {
+      log('Error storing nutrisi value: $error');
     }
   }
 
@@ -28,19 +43,7 @@ class MonitorProvider with ChangeNotifier {
         'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
-      intensitasCahayaMonitor = data['Cahaya']['Intensitas'];
-      notifyListeners();
-    } else {
-      log('Failed to load data: ${response.statusCode}');
-    }
-  }
-
-  Future<void> fetchNutrisi() async {
-    final response = await http.get(Uri.parse(
-        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      nutrisiMonitor = data['Nutrisi']['sensor'];
+      intensitasCahaya = data['Cahaya']['Keadaan'];
       notifyListeners();
     } else {
       log('Failed to load data: ${response.statusCode}');

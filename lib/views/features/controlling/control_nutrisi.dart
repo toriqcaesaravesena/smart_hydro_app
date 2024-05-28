@@ -1,12 +1,12 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers
 
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_hydro_application/utils/colors.dart';
+import 'package:smart_hydro_application/viewmodels/control_provider.dart';
 import 'package:smart_hydro_application/views/shared/date.dart';
 import 'package:smart_hydro_application/views/shared/time.dart';
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
 
 class ControlNutrisiScreen extends StatefulWidget {
   const ControlNutrisiScreen({super.key});
@@ -18,52 +18,22 @@ class ControlNutrisiScreen extends StatefulWidget {
 class _ControlNutrisiScreenState extends State<ControlNutrisiScreen> {
   final TextEditingController _inputJumlahNutrisi = TextEditingController();
 
-  var nutrisiSensor;
-
   @override
   void initState() {
     super.initState();
-    fetchNutrisiSensor();
+    Provider.of<ControlProvider>(context, listen: false).fetchNutrisiSensor();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    fetchNutrisiSensor();
-  }
-
-  Future<void> fetchNutrisiSensor() async {
-    final response = await http.get(Uri.parse(
-        'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/.json'));
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      setState(() {
-        nutrisiSensor = data['Nutrisi']['sensor'];
-      });
-    } else {
-      log('Failed to load data: ${response.statusCode}');
-    }
-  }
-
-  Future<void> storeNutrisiValue(int value) async {
-    try {
-      final response = await http.patch(
-        Uri.parse(
-            'https://smart-hydro-app-2f0c8-default-rtdb.asia-southeast1.firebasedatabase.app/Nutrisi.json'),
-        body: jsonEncode({"kontrol": value}),
-      );
-      if (response.statusCode == 200) {
-        log('Nutrisi value stored successfully: $value');
-      } else {
-        log('Failed to store nutrisi value: ${response.statusCode}');
-      }
-    } catch (error) {
-      log('Error storing nutrisi value: $error');
-    }
+    Provider.of<ControlProvider>(context, listen: false).fetchNutrisiSensor();
   }
 
   @override
   Widget build(BuildContext context) {
+    final nutrisiProvider = Provider.of<ControlProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -76,7 +46,7 @@ class _ControlNutrisiScreenState extends State<ControlNutrisiScreen> {
           color: Colors.white,
         ),
       ),
-      body: nutrisiSensor != null
+      body: nutrisiProvider.nutrisiSensor != null
           ? SingleChildScrollView(
               child: Stack(
                 children: [
@@ -103,47 +73,117 @@ class _ControlNutrisiScreenState extends State<ControlNutrisiScreen> {
                           const SizedBox(
                             height: 20,
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(vertical: 15),
+                          //   child: Center(
+                          //     child: Container(
+                          //       width: 200,
+                          //       height: 200,
+                          //       decoration: BoxDecoration(
+                          //           color: Colors.white,
+                          //           borderRadius: BorderRadius.circular(25),
+                          //           boxShadow: [
+                          //             BoxShadow(
+                          //               color: Colors.grey.withOpacity(0.5),
+                          //               spreadRadius: 3,
+                          //               blurRadius: 7,
+                          //               offset: const Offset(0, 3),
+                          //             )
+                          //           ]),
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.symmetric(
+                          //             vertical: 20, horizontal: 20),
+                          //         child: Column(
+                          //           children: [
+                          //             const Image(
+                          //                 image: AssetImage(
+                          //                     "assets/icons/hd/nutrisi.png")),
+                          //             Text(
+                          //               nutrisiProvider.nutrisiSensor == 0
+                          //     //              ? "Silakan Masukan"
+                          //                   : "${nutrisiProvider.nutrisiSensor}",
+                          //               style: TextStyle(
+                          //                 fontSize:
+                          //                     nutrisiProvider.nutrisiSensor == 0
+                          //      //                   ? 20
+                          //                         : 30, // Adjust size here
+                          //                 fontWeight: FontWeight.w700,
+                          //               ),
+                          //             ),
+                          //             const Text(
+                          //               "Nutrisi/PPM",
+                          //               style: TextStyle(
+                          //                   fontSize: 20,
+                          //                   fontWeight: FontWeight.w700,
+                          //                   color: Colors.grey),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15),
                             child: Center(
-                              child: Container(
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 3,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      )
-                                    ]),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 20, horizontal: 20),
-                                  child: Column(
-                                    children: [
-                                      const Image(
-                                          image: AssetImage(
-                                              "assets/icons/hd/nutrisi.png")),
-                                      Text(
-                                        "${nutrisiSensor}ppm",
-                                        style: const TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w700),
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  double width = constraints.maxWidth * 0.6;
+                                  double height = constraints.maxHeight * 0.6;
+                                  if (width > 200) width = 200;
+                                  if (height > 200) height = 200;
+
+                                  return Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    elevation: 5,
+                                    shadowColor: Colors.grey.withOpacity(0.5),
+                                    child: Container(
+                                      width: width,
+                                      height: height,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(25),
                                       ),
-                                      const Text(
-                                        "Baik",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            color: primaryColor),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Image(
+                                              image: AssetImage(
+                                                  "assets/icons/hd/nutrisi.png"),
+                                            ),
+                                            Text(
+                                              nutrisiProvider.nutrisiSensor == 0
+                                                  ? "Silakan Masukan"
+                                                  : "${nutrisiProvider.nutrisiSensor}",
+                                              style: TextStyle(
+                                                fontSize: nutrisiProvider
+                                                            .nutrisiSensor ==
+                                                        0
+                                                    ? 20
+                                                    : 30, // Adjust size here
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            const Text(
+                                              "Nutrisi/PPM",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -189,7 +229,7 @@ class _ControlNutrisiScreenState extends State<ControlNutrisiScreen> {
                                 final value =
                                     int.tryParse(_inputJumlahNutrisi.text);
                                 if (value != null) {
-                                  storeNutrisiValue(value);
+                                  nutrisiProvider.storeNutrisiValue(value);
                                 } else {
                                   log('Invalid input!');
                                 }

@@ -1,8 +1,10 @@
-// ignore_for_file: unused_import, avoid_unnecessary_containers
+// ignore_for_file: unused_import, avoid_unnecessary_containers, use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:smart_hydro_application/models/user_model.dart';
 import 'package:smart_hydro_application/utils/colors.dart';
 import 'package:smart_hydro_application/viewmodels/user_provider.dart';
@@ -32,24 +34,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     UserModel? userModel = Provider.of<UserProvider>(context).getUser;
 
+    Future<bool?> showLogoutConfirmationDialog(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Lanjutkan Keluar'),
+        content: const Text('Apakah Anda Ingin keluar ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Tidak'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Ya'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
     if (userModel != null) {
       return Scaffold(
           appBar: AppBar(
             title: const Center(
-                child: Text("Profil", style: TextStyle(color: Colors.white))),
+                child: Text("Akun", style: TextStyle(color: Colors.white))),
             backgroundColor: primaryColor,
             automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                  onPressed: () async {
-                    await Provider.of<UserProvider>(context, listen: false)
-                        .signOutUser();
-                  },
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ))
-            ],
+             actions: [
+          IconButton(
+            onPressed: () async {
+              bool? shouldLogout = await showLogoutConfirmationDialog(context);
+
+              if (shouldLogout == true) {
+                await Provider.of<UserProvider>(context, listen: false).signOutUser();
+              }
+            },
+            icon: const Icon(Icons.logout, color: Colors.white,),
+          ),
+        ],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -70,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundImage:
-                            AssetImage("assets/img/profile_pictures/pp.jpg"),
+                            AssetImage("assets/img/profile_pictures/pp.png"),
                       ),
                     ),
                     Container(
@@ -152,7 +177,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EditProfileScreen(username: userModel.username, email: userModel.email,)));
+                                                EditProfileScreen(
+                                                  username: userModel.username,
+                                                  email: userModel.email,
+                                                )));
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: primaryColor,

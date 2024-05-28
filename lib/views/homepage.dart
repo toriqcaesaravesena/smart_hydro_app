@@ -23,6 +23,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    updateData();
+  }
+
   updateData() async {
     UserProvider userProvider = Provider.of(context, listen: false);
     await userProvider.refreshUser();
@@ -32,10 +38,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     UserModel? userModel = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        automaticallyImplyLeading: false,
-      ),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Stack(
@@ -45,7 +47,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                 child: Column(
                   children: [
                     Container(
@@ -80,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                             child: const CircleAvatar(
                               radius: 28,
                               backgroundImage: AssetImage(
-                                  "assets/img/profile_pictures/pp.jpg"),
+                                  "assets/img/profile_pictures/pp.png"),
                             ),
                           )
                         ],
@@ -205,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                                                       width: 85,
                                                       height: 100,
                                                       child: const Text(
-                                                        "Intensitas Cahaya",
+                                                        "Lampu Ultraviolet",
                                                         textAlign:
                                                             TextAlign.center,
                                                         maxLines: 4,
@@ -372,37 +375,6 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     const SizedBox(
                                       height: 30,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        goToHistoryDataPage(context);
-                                      },
-                                      child: SizedBox(
-                                          width: double.infinity,
-                                          height: 10 * 5,
-                                          child: DecoratedBox(
-                                            decoration: BoxDecoration(
-                                                color: primaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: const Center(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.history, color: Colors.white,),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(left:5),
-                                                    child: Text("History Data",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w500)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )),
                                     ),
                                   ]),
                             ),

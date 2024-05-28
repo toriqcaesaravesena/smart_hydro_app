@@ -35,7 +35,7 @@ class _NavigationPage extends State<NavigationPage> {
             backgroundColor: primaryColor,
             items: const [
               TabItem(icon: Icons.home, title: 'Beranda'),
-              TabItem(icon: Icons.people, title: 'Profil'),
+              TabItem(icon: Icons.people, title: 'Akun'),
             ],
             initialActiveIndex: 0,
             onTap: navigateBottomBar));

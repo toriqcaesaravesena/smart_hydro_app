@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:smart_hydro_application/utils/const.dart';
+// ignore_for_file: library_private_types_in_public_api
 
-class InputTextField extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:smart_hydro_application/utils/colors.dart';
+
+class InputTextField extends StatefulWidget {
   const InputTextField({
     super.key,
     required this.hintText,
@@ -16,29 +18,50 @@ class InputTextField extends StatelessWidget {
   final TextEditingController textEditingController;
 
   @override
+  _InputTextFieldState createState() => _InputTextFieldState();
+}
+
+class _InputTextFieldState extends State<InputTextField> {
+  bool _isObscure = true;
+
+  @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: Divider.createBorderSide(context,color: Colors.grey, width: 1.0),
-      
+      borderSide: Divider.createBorderSide(context, color: Colors.grey, width: 1.0),
     );
 
     return TextField(
-      controller: textEditingController,
+      controller: widget.textEditingController,
       decoration: InputDecoration(
-          hintText: hintText,
-          border: inputBorder,
-          enabledBorder: inputBorder,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(
-                color: primaryColor,
-                width: 1.0), // Customize focused border color
-          ),
-          filled: true,
-          contentPadding: const EdgeInsets.all(8)),
-      keyboardType: textInputType,
-      obscureText: isPass,
+        hintText: widget.hintText,
+        border: inputBorder,
+        enabledBorder: inputBorder,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: primaryColor,
+            width: 1.0,
+          ), // Customize focused border color
+        ),
+        filled: true,
+        contentPadding: const EdgeInsets.all(8),
+        suffixIcon: widget.isPass
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                },
+                icon: Icon(
+                  _isObscure ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.grey,
+                ),
+              )
+            : null,
+      ),
+      keyboardType: widget.textInputType,
+      obscureText: widget.isPass ? _isObscure : false,
     );
   }
 }
