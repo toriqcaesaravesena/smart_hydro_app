@@ -72,61 +72,6 @@ class _MonitorIntensitasCahayaScreenState
                             const SizedBox(
                               height: 20,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(vertical: 15),
-                            //   child: Center(
-                            //     child: Container(
-                            //       width: 200,
-                            //       height: 200,
-                            //       decoration: BoxDecoration(
-                            //           color: Colors.white,
-                            //           borderRadius: BorderRadius.circular(25),
-                            //           boxShadow: [
-                            //             BoxShadow(
-                            //               color: Colors.grey.withOpacity(0.5),
-                            //               spreadRadius: 3,
-                            //               blurRadius: 7,
-                            //               offset: const Offset(0, 3),
-                            //             )
-                            //           ]),
-                            //       child: Padding(
-                            //         padding: const EdgeInsets.symmetric(
-                            //             vertical: 20, horizontal: 20),
-                            //         child: Column(
-                            //           children: [
-                            //             const Image(
-                            //                 image: AssetImage(
-                            //                     "assets/icons/hd/intensitas_cahaya.png")),
-                            //             Padding(
-                            //               padding:
-                            //                   const EdgeInsets.only(top: 8.0),
-                            //               child: Text(
-                            //                 intenstasCahayaProvider
-                            //                     .intensitasCahayaMonitor,
-                            //                 style: TextStyle(
-                            //                     fontSize: 30,
-                            //                     fontWeight: FontWeight.w700,
-                            //                     color: intenstasCahayaProvider
-                            //                                 .intensitasCahayaMonitor ==
-                            //                             "1023"
-                            // //                        ? primaryColor
-                            //                         : Colors.grey),
-                            //               ),
-                            //             ),
-                            //             const Text(
-                            //               "Lux",
-                            //               style: TextStyle(
-                            //                 fontSize: 18,
-                            //                 fontWeight: FontWeight.w700,
-                            //                 color: Colors.black,
-                            //               ),
-                            //             )
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               child: Center(
