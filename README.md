@@ -1,16 +1,10 @@
-# smart_hydro_application
 
-A new Flutter project.
+# SmartHydro
 
-## Getting Started
+Mobile IoT app that enables real-time remote control and monitoring of hydroponic systems, enhancing efficiency and productivity.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![App Screenshot](https://i.ibb.co.com/6Yd9XvM/Group-206.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
