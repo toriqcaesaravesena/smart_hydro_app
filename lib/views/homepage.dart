@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Halo ${userModel?.username}",
+                                "Halo ${userModel?.username.split(' ').first ?? ''}",
                                 style: const TextStyle(
                                     fontFamily: "Lato",
                                     fontSize: 24,
